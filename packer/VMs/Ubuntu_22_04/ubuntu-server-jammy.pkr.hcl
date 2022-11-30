@@ -67,6 +67,7 @@ source "proxmox" "ubuntu-server-jammy" {
         model = "virtio"
         bridge = "vmbr0"
         firewall = "false"
+        mac_address = "AA:AA:AA:01:00:15"
     } 
 
     # VM Cloud-Init Settings
@@ -75,12 +76,11 @@ source "proxmox" "ubuntu-server-jammy" {
 
     # PACKER Boot Commands
     boot_command = [
-        "<esc><wait>",
-        "e<wait>",
-        "<down><down><down><end>",
-        "<bs><bs><bs><bs><wait>",
-        "autoinstall ds=nocloud-net\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ ---<wait>",
-        "<f10><wait>"
+        "<esc><wait><esc><wait>",
+        "<f6><wait><esc><wait>",
+        "<bs><bs><bs><bs><bs>",
+        "autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/",
+        "--- <enter>"
     ]
     boot = "c"
     boot_wait = "5s"
