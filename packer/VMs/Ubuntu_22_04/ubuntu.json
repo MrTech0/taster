@@ -1,0 +1,63 @@
+{
+  "variables": {
+    "proxmox_vm_id": "200",
+    "proxmox_template_name": "ubuntu-22.04",
+    "ubuntu_iso_file": "ubuntu-22.04.1-live-server-amd64.iso"
+  },
+  "builders": [{
+    "type": "proxmox",
+    "proxmox_url": "https://192.168.124.4:8006/api2/json",
+    "insecure_skip_tls_verify": "true",
+    "username": "{{ user `proxmox_username` }}",
+    "token": "{{ user `proxmox_token` }}",
+    "node": "pve1",
+    "vm_id": "{{ user `proxmox_vm_id` }}",
+    "network_adapters": [{
+      "bridge": "vmbr0",
+        "mac_address":"AA:AA:AA:01:00:15"
+    }],
+    "disks": [{
+      "type": "scsi",
+      "disk_size": "20G",
+      "storage_pool": "CEPH_Pool_data",
+      "storage_pool_type": "cephfs"
+    }],
+    "iso_file": "local:iso/{{ user `ubuntu_iso_file` }}",
+    "unmount_iso": true,
+    "boot_wait": "5s",
+    "memory": 1024,
+    "template_name": "{{ user `proxmox_template_name` }}",
+    "http_directory": "http",
+    "boot_command": [
+"<esc><esc><esc><esc>e<wait>",
+        "<del><del><del><del><del><del><del><del>",
+        "<del><del><del><del><del><del><del><del>",
+        "<del><del><del><del><del><del><del><del>",
+        "<del><del><del><del><del><del><del><del>",
+        "<del><del><del><del><del><del><del><del>",
+        "<del><del><del><del><del><del><del><del>",
+        "<del><del><del><del><del><del><del><del>",
+        "<del><del><del><del><del><del><del><del>",
+        "<del><del><del><del><del><del><del><del>",
+        "<del><del><del><del><del><del><del><del>",
+        "<del><del><del><del><del><del><del><del>",
+        "<del><del><del><del><del><del><del><del>",
+        "<del><del><del><del><del><del><del><del>",
+        "<del><del><del><del><del><del><del><del>",
+        "linux /casper/vmlinuz --- autoinstall ds=\"nocloud-net;seedfrom=http://{{.HTTPIP}}:{{.HTTPPort}}/\"<enter><wait>",
+        "initrd /casper/initrd<enter><wait>",
+        "boot<enter>",
+        "<enter><f10><wait>"
+],
+    "qemu_agent": false,
+    "ssh_username": "packer@pam!Packer_ID" ,
+    "ssh_password": "8fa5a5db-3062-4e60-ad79-e2796bb9b454",
+    "ssh_timeout": "20m"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "inline": [
+      "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+    ]
+  }]
+}
