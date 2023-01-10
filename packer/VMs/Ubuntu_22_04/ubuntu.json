@@ -49,10 +49,10 @@
         "boot<enter>",
         "<enter><f10><wait>"
 ],
-    "qemu_agent": false,
+    "qemu_agent": true,
     "ssh_username": "packer@pam!Packer_ID" ,
     "ssh_password": "8fa5a5db-3062-4e60-ad79-e2796bb9b454",
-    "ssh_timeout": "20m"
+    "ssh_timeout": "120m"
   }],
   "provisioners": [{
     "type": "shell",
