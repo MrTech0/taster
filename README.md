@@ -1,2 +1,2 @@
 # taster
-Template files for ASIX final project (TASTER)
+Template files for ASIX final project  (TASTER)
