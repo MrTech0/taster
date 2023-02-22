@@ -7,7 +7,7 @@
     proxmox_host: 192.168.124.4:8006
     proxmox_user: root@pam
     proxmox_pass: H0laMund0*
-    vm_name: presentacion
+    vm_name: {{vm_name}}
     cpu_sockets: 1
     cpu_cores: 1
     ram_mb: 2048
