@@ -7,14 +7,14 @@
     proxmox_host: 192.168.124.4:8006
     proxmox_user: root@pam
     proxmox_pass: H0laMund0*
-    vm_name: test1
+    vm_name: testvm100
     cpu_sockets: 1
     cpu_cores: 1
     ram_mb: 2048
     disk_gb: 50
     vlan: 1
     datastore: CEPH_Pool_data
-    template_name: Presentacion
+    template_name: resulta2
     proxmox_node: pve1
     network_mac_addr: "AA:AA:AA:01:00:20"
     network_bridge: vmbr0

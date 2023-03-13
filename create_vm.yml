@@ -7,10 +7,10 @@
     proxmox_host: 192.168.124.4:8006
     proxmox_user: root@pam
     proxmox_pass: H0laMund0*
-    vm_name: testvm100
+    vm_name: "{{ nombre_vm }}"
     cpu_sockets: 1
-    cpu_cores: 1
-    ram_mb: 2048
+    cpu_cores: "{{ nucleos_cpu }}"
+    ram_mb: "{{ mb_ram }}"
     disk_gb: 50
     vlan: 1
     datastore: CEPH_Pool_data
@@ -18,20 +18,3 @@
     proxmox_node: pve1
     network_mac_addr: "AA:AA:AA:01:00:20"
     network_bridge: vmbr0
-
-- name: Create user and make it sudoer
-  hosts: testvm95
-  become: yes
-
-  tasks:
-    - name: Create new user
-      user:
-        name: TEST
-        state: present
-
-    - name: Add user to sudoers
-      lineinfile:
-        path: /etc/sudoers
-        state: present
-        line: "TEST ALL=(ALL) NOPASSWD:ALL"
-        validate: /usr/sbin/visudo -cf %s
